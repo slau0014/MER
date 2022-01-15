@@ -14,11 +14,25 @@ from keras import backend as K
 import numpy as np
 import torch
 import torch.nn as nn
-import deepfool
 import model as mdl
 from torchvision import transforms
 import torchvision
 
+def write_cm(f, mat):
+  '''
+  Write confusion matrix mat to output file f
+  '''
+  print("Writing files: ", f)
+  output = open(f, "w")
+  for l in mat:
+    output.write('[')
+    output.write(str(l[0]))
+    for n in range(1, len(l)):
+      output.write(" " + str(l[n]))
+    output.write("]")
+    output.write("\n")
+  output.close()
+	
 K.set_image_dim_ordering('th')
 
 image_rows, image_columns, image_depth = 64, 64, 18
@@ -145,6 +159,7 @@ for i in range(1,6):
     print(acc)
     avg += acc
 
+write_cm("smic-train.txt", cfm)
 print(avg/5)
 print("Finish training")
 print()
@@ -231,4 +246,5 @@ predictions = model.predict(test_set)
 predictions_labels = numpy.argmax(predictions, axis=1)
 testlabels = numpy.argmax(testlabels, axis=1)
 cfm = confusion_matrix(testlabels, predictions_labels)
+write_cm("smic-test.txt", cfm)
 print (cfm)
