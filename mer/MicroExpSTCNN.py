@@ -18,9 +18,6 @@ import deepfool
 import model as mdl
 from torchvision import transforms
 import torchvision
-import time
-
-start = time.time()
 
 K.set_image_dim_ordering('th')
 
@@ -29,9 +26,9 @@ image_rows, image_columns, image_depth = 64, 64, 18
 training_list = []
 
 # training path
-negativepath = '/content/drive/MyDrive/FYP_1/micro-expression/negative/'
-positivepath = '/content/drive/MyDrive/FYP_1/micro-expression/positive/'
-surprisepath = '/content/drive/MyDrive/FYP_1/micro-expression/surprise/'
+negativepath = '/content/drive/MyDrive/MeSelves/FYP_1/micro-expression/negative/'
+positivepath = '/content/drive/MyDrive/MeSelves/FYP_1/micro-expression/positive/'
+surprisepath = '/content/drive/MyDrive/MeSelves/FYP_1/micro-expression/surprise/'
 
 print("Start processing training data")
 # read frames from videos
@@ -124,7 +121,7 @@ model.compile(loss = 'categorical_crossentropy', optimizer = 'SGD', metrics = ['
 
 model.summary()
 
-filepath="/content/drive/MyDrive/FYP_1/micro-expression/weights_microexpstcnn/smic/weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
+filepath="/content/drive/MyDrive/MeSelves/FYP_1/micro-expression/weights_microexpstcnn/smic/weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
 callbacks_list = [checkpoint]
 
@@ -153,9 +150,9 @@ print("Finish training")
 print()
 
 # Testing part
-test_negativepath = '/content/drive/MyDrive/EVP_results/smic_label/negative/'
-test_positivepath = '/content/drive/MyDrive/EVP_results/smic_label/positive/'
-test_surprisepath = '/content/drive/MyDrive/EVP_results/smic_label/surprise/'
+test_negativepath = '/content/drive/MyDrive/MeSelves/EVP_results/smic_label/negative/'
+test_positivepath = '/content/drive/MyDrive/MeSelves/EVP_results/smic_label/positive/'
+test_surprisepath = '/content/drive/MyDrive/MeSelves/EVP_results/smic_label/surprise/'
 
 test_list = []
 
