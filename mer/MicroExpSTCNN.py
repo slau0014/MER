@@ -17,18 +17,29 @@ import torch.nn as nn
 import model as mdl
 from torchvision import transforms
 import torchvision
-
 def write_cm(f, mat):
   '''
   Write confusion matrix mat to output file f
   '''
   print("Writing files: ", f)
   output = open(f, "w")
-  for l in mat:
+  output.write("Confusion matrix\n")
+  sumlst = [0, 0, 0]
+  for i in range(3):
     output.write('[')
-    output.write(str(l[0]))
-    for n in range(1, len(l)):
-      output.write(" " + str(l[n]))
+    output.write(str(mat[i][0]))
+    sumlst[i] += mat[i][0]
+    for n in range(1, 3):
+      output.write(" " + str(mat[i][n]))
+      sumlst[i] += mat[i][n]
+    output.write("]")
+    output.write("\n")
+  output.write("\nConfusion matrix(normalized)\n")
+  for i in range(3):
+    output.write('[')
+    output.write(str(mat[i][0]/sumlst[i]))
+    for n in range(1, 3):
+      output.write(" " + str(mat[i][n]/sumlst[i]))
     output.write("]")
     output.write("\n")
   output.close()
